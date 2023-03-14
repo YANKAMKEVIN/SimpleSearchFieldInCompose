@@ -8,21 +8,28 @@ import kotlinx.coroutines.flow.*
 
 @OptIn(FlowPreview::class)
 class MainViewModel: ViewModel() {
-
+    // Create a private mutable state flow to hold the user's search text
     private val _searchText = MutableStateFlow("")
+    // Create a public immutable state flow to expose the user's search text
     val searchText = _searchText.asStateFlow()
-
+    // Create a private mutable state flow to hold the search status
     private val _isSearching = MutableStateFlow(false)
+    // Create a public immutable state flow to expose the search status
     val isSearching = _isSearching.asStateFlow()
-
+    // Create a private mutable state flow to hold the list of persons
     private val _persons = MutableStateFlow(allPersons)
+    // Create a public immutable state flow to expose the filtered list of persons
     val persons = searchText
+        // Debounce the search text flow for 1 second to reduce the number of queries made while the user types
         .debounce(1000L)
         .onEach { _isSearching.update { true } }
+        // Combine the search text and persons flows to filter the list of persons based on the search text
         .combine(_persons) { text, persons ->
             if(text.isBlank()) {
                 persons
             } else {
+                // If the search text is not empty, delay for 2 seconds to reduce the number of queries made while the user types,
+                // then filter the list of persons to only include those that match the search text
                 delay(2000L)
                 persons.filter {
                     it.doesMatchSearchQuery(text)
@@ -30,12 +37,15 @@ class MainViewModel: ViewModel() {
             }
         }
         .onEach { _isSearching.update { false } }
+        // Create an immutable state flow that shares the latest value with all subscribers,
+        // and uses the last value of the private mutable state flow as the initial value
         .stateIn(
             viewModelScope,
             SharingStarted.WhileSubscribed(5000),
             _persons.value
         )
 
+    // Create a function to update the search text
     fun onSearchTextChange(text: String) {
         _searchText.value = text
     }
