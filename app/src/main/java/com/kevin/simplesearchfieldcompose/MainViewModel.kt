@@ -41,22 +41,30 @@ class MainViewModel: ViewModel() {
     }
 }
 
+// Definition of the Person data class with two String properties: first name and last name
 data class Person(
     val firstName: String,
     val lastName: String
 ) {
+    // Function that takes a search query string as input and returns a boolean indicating whether the person matches the query
     fun doesMatchSearchQuery(query: String): Boolean {
+        // List of string combinations that could match the person
         val matchingCombinations = listOf(
             "$firstName$lastName",
             "$firstName $lastName",
+            // Combination of the first initial and last initial with a space between them
             "${firstName.first()} ${lastName.first()}",
         )
 
+        // Check if the query string is contained in any of the generated string combinations
+        // If the query string is contained in any of the combinations, return true, otherwise return false
+        // The comparison is performed by ignoring the case of the query string using the ignoreCase = true option
         return matchingCombinations.any {
             it.contains(query, ignoreCase = true)
         }
     }
 }
+
 
 private val allPersons = listOf(
     Person(
