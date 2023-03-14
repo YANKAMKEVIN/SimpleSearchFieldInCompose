@@ -1,4 +1,4 @@
-package com.plcoding.searchfieldcompose.ui.theme
+package com.kevin.simplesearchfieldcompose.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

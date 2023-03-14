@@ -1,4 +1,4 @@
-package com.plcoding.searchfieldcompose
+package com.kevin.simplesearchfieldcompose
 
 import org.junit.Test
 
