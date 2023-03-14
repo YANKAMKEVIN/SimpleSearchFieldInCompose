@@ -28,6 +28,8 @@ class MainActivity : ComponentActivity() {
                 val persons by viewModel.persons.collectAsState()
                 // Collect the current search status (whether a search is in progress) from the view model as a state
                 val isSearching by viewModel.isSearching.collectAsState()
+                // Collect the current isNoResults boolean from the view model as a state
+                val isNoResults by viewModel.isNoResultsFound.collectAsState()
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
@@ -42,12 +44,15 @@ class MainActivity : ComponentActivity() {
                     )
                     Spacer(modifier = Modifier.height(16.dp))
                     // If a search is in progress, show a progress indicator
-                    if(isSearching) {
+                    if (isSearching) {
                         Box(modifier = Modifier.fillMaxSize()) {
                             CircularProgressIndicator(
                                 modifier = Modifier.align(Alignment.Center)
                             )
                         }
+                    } else if (isNoResults) {
+                        //if the query entered is not found, show a text indicator
+                        Text("Not found... please retry another name")
                     } else {
                         // Otherwise, show a lazy column with the list of persons that match the search query
                         LazyColumn(
