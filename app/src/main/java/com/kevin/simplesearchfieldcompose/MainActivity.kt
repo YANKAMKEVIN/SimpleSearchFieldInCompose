@@ -19,16 +19,21 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
+            // Set up the theme for the app
             SearchFieldComposeTheme {
                 val viewModel = viewModel<MainViewModel>()
+                // Collect the current search text from the view model as a state
                 val searchText by viewModel.searchText.collectAsState()
+                // Collect the current list of persons that match the search query from the view model as a state
                 val persons by viewModel.persons.collectAsState()
+                // Collect the current search status (whether a search is in progress) from the view model as a state
                 val isSearching by viewModel.isSearching.collectAsState()
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(16.dp)
                 ) {
+                    // Text field for entering search query
                     TextField(
                         value = searchText,
                         onValueChange = viewModel::onSearchTextChange,
@@ -36,6 +41,7 @@ class MainActivity : ComponentActivity() {
                         placeholder = { Text(text = "Search") }
                     )
                     Spacer(modifier = Modifier.height(16.dp))
+                    // If a search is in progress, show a progress indicator
                     if(isSearching) {
                         Box(modifier = Modifier.fillMaxSize()) {
                             CircularProgressIndicator(
@@ -43,6 +49,7 @@ class MainActivity : ComponentActivity() {
                             )
                         }
                     } else {
+                        // Otherwise, show a lazy column with the list of persons that match the search query
                         LazyColumn(
                             modifier = Modifier
                                 .fillMaxWidth()
