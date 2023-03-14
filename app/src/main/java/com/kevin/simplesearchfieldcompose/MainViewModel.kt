@@ -60,19 +60,37 @@ data class Person(
 
 private val allPersons = listOf(
     Person(
-        firstName = "Philipp",
-        lastName = "Lackner"
+        firstName = "Kevin",
+        lastName = "Yankam"
     ),
     Person(
-        firstName = "Beff",
-        lastName = "Jezos"
+        firstName = "Emmanuel",
+        lastName = "Macron"
     ),
     Person(
-        firstName = "Chris P.",
-        lastName = "Bacon"
+        firstName = "Johnny",
+        lastName = "Bravo"
     ),
     Person(
-        firstName = "Jeve",
-        lastName = "Stops"
+        firstName = "Barack",
+        lastName = "Obama"
+    ),    Person(
+        firstName = "Julien",
+        lastName = "Sizorn"
+    ),    Person(
+        firstName = "Pierre",
+        lastName = "Issartel"
+    ),    Person(
+        firstName = "Omar",
+        lastName = "Arab"
+    ),    Person(
+        firstName = "Laetitia",
+        lastName = "Casta"
+    ),    Person(
+        firstName = "Celine",
+        lastName = "Dion"
+    ),    Person(
+        firstName = "Samuel",
+        lastName = "Eto"
     ),
 )
